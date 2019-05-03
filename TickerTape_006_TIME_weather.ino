@@ -1,6 +1,6 @@
 /* ***************************************************************************************************** *\
 **     TickerTape Firmware                                                                               **
-**     (Kickstarter Backer Version 0.3)                                                                  **
+**     (Kickstarter Backer Version 0.6)                                                                  **
 **     (c) 2019 Darren Dignam                                                                            **
 **                                                                                                       **
 **                                                                                                       **

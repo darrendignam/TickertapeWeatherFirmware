@@ -61,8 +61,12 @@ WiFiClientSecure client;
 //Time params
 #include <time.h>
 
+// The timezone stuff here is a bit crude, so if you want to make it better, skip down to where these values are used (line 338), and you can implement an actual 
+// timezone it is a bit more complex, but should be more useful in the long run, accounting for daylight savings time, and odd timezones where the offset is 1.5 hours.
+
+
 short timezone_default = 1;
-uint8_t timezone;
+short timezone;
 
 char displaybuffer[6] = {' ',' ',' ',' ',' ',' '};
 char _str_buffer[7];  //6 chars and a null char...
@@ -331,8 +335,27 @@ void setup() {
   //SPIFFS.format();  //erases stored values
   Serial.println("Done");
 
-  //setup time stuff
+  //Use these commands to implement an actual timezone. Change the configTime to the version on the next line, and straight after - add the setenv for your location.
+  //
+  // the standard configTime function:
+//            configTime(0, 0, "pool.ntp.org", "time.nist.gov");
+  //
+  // now you need to use the setenv command and set the device TZ timezone. the Line below is for GMT. But you will need to replace the "GMT0" 
+  // with your timezone string. 
+  // The timezone strings can be found in the following CSV online:
+  // https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
+  // Further reading:
+  // https://github.com/G6EJD/ESP32-Time-Services-and-SETENV-variable/blob/master/README.md
+  // https://www.timeanddate.com/time/zones/
+  //
+//            setenv("TZ", "GMT0", 1);
+  //
+  // You can add additional parameters to the timezone string, but that is beyond the scope of this comment!
+  
+  //timezone offset config....
   configTime(timezone * 3600, 0, "pool.ntp.org", "time.nist.gov");
+  
+  
   Serial.println("\nWaiting for time");
   while (!time(nullptr)) {
     Serial.print(".");
